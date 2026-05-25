@@ -87,5 +87,37 @@ public_users.get('/review/:isbn',function (req, res) {
   }
   return res.status(404).json({message:"Book not found"});
 });
+const axios = require("axios");
 
+const BASE_URL = "http://localhost:5000";
+
+(async () => {
+  try {
+    // =========================
+    // TASK 1: Get all books
+    // =========================
+    const booksResponse = await axios.get(`${BASE_URL}/books`);
+    console.log("All Books:");
+    console.log(booksResponse.data);
+
+    // =========================
+    // TASK 2: Get book by ISBN
+    // =========================
+    const isbn = "1"; // change if needed
+    const bookByISBN = await axios.get(`${BASE_URL}/books/${isbn}`);
+    console.log(`Book with ISBN ${isbn}:`);
+    console.log(bookByISBN.data);
+
+    // =========================
+    // TASK 3: Get books by Author
+    // =========================
+    const author = "Author Name"; // change based on dataset
+    const booksByAuthor = await axios.get(`${BASE_URL}/books?author=${author}`);
+    console.log(`Books by ${author}:`);
+    console.log(booksByAuthor.data);
+
+  } catch (error) {
+    console.error("Error fetching data:", error.message);
+  }
+})();
 module.exports.general = public_users;
